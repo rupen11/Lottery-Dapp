@@ -21,6 +21,7 @@ const Manager = ({ web3Api }) => {
             const { contract } = web3Api;
             await contract.methods.pickWinner().send({ from: account });
             const winner = await contract.methods.winner().call();
+            console.log(winner);
             setLotterywinner(winner);
         } catch (e) {
             if (e.message.includes("You are not the manager")) {
@@ -37,7 +38,8 @@ const Manager = ({ web3Api }) => {
         const getAccount = async () => {
             const { web3 } = web3Api;
             const accounts = await web3.eth.getAccounts();
-            setAccout(accounts[0]);
+            if (accounts.length !== 0) setAccout(accounts[0]);
+            else setAccout("0x000000000000000000");
         };
 
         web3Api.web3 && getAccount();
@@ -45,11 +47,17 @@ const Manager = ({ web3Api }) => {
 
     return (
         <>
-            <h5>{account}</h5>
-            <h5>{contractbalance}</h5>
-            <button onClick={contractBalance}>Check Balance</button>
-            <h5>{lotterywinner}</h5>
-            <button onClick={winner}>Winner</button>
+            <div className="container">
+                <h3>{account}</h3>
+                <h5>{contractbalance} ETH</h5>
+                <button onClick={contractBalance} className="btn_manager">
+                    Check Balance
+                </button>
+                <h5>{lotterywinner}</h5>
+                <button onClick={winner} className="btn_manager">
+                    Winner
+                </button>
+            </div>
         </>
     );
 };

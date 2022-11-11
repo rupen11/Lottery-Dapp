@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 const Home = () => {
     return (
         <>
-            <Link to="/manager">
-                <button>Manager</button>
-            </Link>
-            <Link to="/players">
-                <button>Player</button>
-            </Link>
+            <div className="container">
+                <Link to="/manager">
+                    <button className="btn">Manager</button>
+                </Link>
+                <Link to="/players">
+                    <button className="btn">Player</button>
+                </Link>
+            </div>
         </>
     );
 };

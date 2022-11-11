@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Player.css";
 
 const Player = ({ web3Api, address }) => {
-    const [account, setAccount] = useState("0x000000000000000000");
+    const [account, setAccount] = useState("");
     const [registerPlayers, setRegisterPlayers] = useState([]);
     const [reload, shouldReload] = useState(false);
 
@@ -12,7 +12,8 @@ const Player = ({ web3Api, address }) => {
         const getAccount = async () => {
             const { web3 } = web3Api;
             const accounts = await web3.eth.getAccounts();
-            setAccount(accounts[0]);
+            if (accounts.length !== 0) setAccount(accounts[0]);
+            else setAccount("0x000000000000000000");
         };
 
         web3Api.web3 && getAccount();
@@ -32,13 +33,17 @@ const Player = ({ web3Api, address }) => {
 
     return (
         <>
-            <h5>{account}</h5>
-            <h5>Contract Address:{address}</h5>
-            {registerPlayers.length !== 0 ? (
-                registerPlayers?.map((value) => <h5 key={value}>{value}</h5>)
-            ) : (
-                <h5>No players</h5>
-            )}
+            <div className="container">
+                <h3>{account}</h3>
+                <h5>Contract Address: {address}</h5>
+                {registerPlayers.length !== 0 ? (
+                    registerPlayers?.map((value) => (
+                        <h5 key={value}>{value}</h5>
+                    ))
+                ) : (
+                    <h5>No players</h5>
+                )}
+            </div>
         </>
     );
 };

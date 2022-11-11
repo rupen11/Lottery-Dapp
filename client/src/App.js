@@ -21,7 +21,7 @@ function App() {
                 const web3 = await GetWeb3();
                 const networkId = await web3.eth.net.getId();
                 const deployedNetwork = Lottery.networks[networkId];
-                console.log("Contract Address:", deployedNetwork.address);
+                // console.log("Contract Address:", deployedNetwork.address);
                 const contract = new web3.eth.Contract(
                     Lottery.abi,
                     deployedNetwork?.address
@@ -41,19 +41,21 @@ function App() {
     }, []);
     return (
         <>
-            <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route
-                    exact
-                    path="/manager"
-                    element={<Manager web3Api={web3Api} />}
-                />
-                <Route
-                    exact
-                    path="/players"
-                    element={<Player web3Api={web3Api} address={address} />}
-                />
-            </Routes>
+            <div className="main_container">
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route
+                        exact
+                        path="/manager"
+                        element={<Manager web3Api={web3Api} />}
+                    />
+                    <Route
+                        exact
+                        path="/players"
+                        element={<Player web3Api={web3Api} address={address} />}
+                    />
+                </Routes>
+            </div>
         </>
     );
 }
